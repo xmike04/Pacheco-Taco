@@ -1,0 +1,13 @@
+{
+  "name": "Pacheco Taco N Burger",
+  "short_name": "Pacheco",
+  "description": "Smash burgers and street tacos in The Cedars, Dallas.",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#bd2b19",
+  "background_color": "#fbf3e4",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
