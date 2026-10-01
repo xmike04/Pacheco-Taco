@@ -1,0 +1,14 @@
+---
+// Design-system Tag (pt-tag). Meaningful tags always carry an icon AND a word, never colour alone.
+import Icon from './Icon.astro';
+
+interface Props {
+  kind?: 'chile' | 'queso' | 'nopal' | 'jamaica' | 'plain';
+  icon?: string;
+}
+const { kind = 'plain', icon } = Astro.props;
+---
+
+<span class:list={['pt-tag', kind !== 'plain' && `pt-tag--${kind}`]}>
+  {icon && <Icon name={icon} />}<slot />
+</span>

@@ -1,0 +1,55 @@
+---
+// Design-system Hero: chile ground, papel picado garland, one headline (≤1 script word),
+// one sentence, two actions. The right-hand visual is a real photo when one is supplied
+// (photos.ts slot "hero"), otherwise the Texas Sun burst + sticker — no stock, no AI renders.
+import Button from './Button.astro';
+import Photo from './Photo.astro';
+import { site } from '../data/site';
+import { photos } from '../data/photos';
+
+const heroPhoto = photos.find((p) => p.slot === 'hero');
+---
+
+<section class="pt-hero hero" aria-labelledby="hero-title">
+  <div class="pt-hero__picado" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="pt-eyebrow pt-hero__kicker">{site.neighborhood} · {site.city}, Texas</p>
+        <h1 id="hero-title">Smash burgers <span class="pt-script">&amp;</span> street tacos</h1>
+        <p>Family-owned, smashed to order, and seasoned with love — right on South Ervay.</p>
+        <div class="pt-hero__actions">
+          <Button href={site.links.order} variant="queso" icon="bag" external>Order online</Button>
+          <Button href={site.links.directions} variant="ghost" icon="map-pin" external>Get directions</Button>
+        </div>
+        <p class="hero__status"><span class="open-status" data-open-status hidden></span></p>
+      </div>
+
+      <div class="hero__visual">
+        {
+          heroPhoto ? (
+            <>
+              <div class="sun sun--behind" aria-hidden="true" />
+              <Photo
+                entry={heroPhoto}
+                eager
+                widths={[480, 720, 960]}
+                sizes="(min-width: 961px) 460px, 80vw"
+                class="hero__photo"
+              />
+            </>
+          ) : (
+            <div class="sun" aria-hidden="true" />
+          )
+        }
+        <img
+          class="sticker sticker--smashed"
+          src="/assets/stickers/smashed-to-order.svg"
+          alt=""
+          width="520"
+          height="220"
+        />
+      </div>
+    </div>
+  </div>
+</section>

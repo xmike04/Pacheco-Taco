@@ -1,0 +1,74 @@
+---
+// Design-system Footer: red checker strip, seal, tagline, address/hours repeat, last Order button.
+// Ground is `ink` with `surface-000` text, which inverts in Noche on purpose.
+import Button from './Button.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { site, fullAddress, openDaysSummary, closedDays } from '../data/site';
+
+const year = new Date().getFullYear();
+const social = [
+  { label: 'Facebook', href: site.links.facebook },
+  { label: 'Instagram', href: site.links.instagram },
+  { label: 'Yelp', href: site.links.yelp },
+  { label: site.links.orderLabel, href: site.links.order },
+];
+---
+
+<footer class="pt-footer site-footer">
+  <div
+    class="pt-footer__checker"
+    style="background-image:url(/assets/patterns/checker-band-red.svg)"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="container">
+    <div class="pt-footer__inner site-footer__inner">
+      <img
+        class="pt-footer__seal"
+        src="/assets/logos/pacheco-seal.svg"
+        alt="Pacheco Taco N Burger seal"
+        width="120"
+        height="120"
+        loading="lazy"
+      />
+      <div class="site-footer__about">
+        <p class="pt-eyebrow">Hecho con amor en Dallas</p>
+        <address>
+          {fullAddress}<br />
+          Inside {site.inside}<br />
+          {openDaysSummary()} · closed {closedDays().join(', ')}<br />
+          <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
+        </address>
+      </div>
+      <Button href={site.links.order} variant="queso" icon="bag" external>Order now</Button>
+    </div>
+
+    <div class="site-footer__links">
+      <nav aria-label="Footer">
+        <ul class="site-footer__list">
+          <li><a href="/menu/">Menu</a></li>
+          <li><a href="/#visit">Visit</a></li>
+          <li><a href="/#story">Our story</a></li>
+        </ul>
+      </nav>
+      <ul class="site-footer__list">
+        {
+          social.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener">
+                {s.label}
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <ThemeToggle />
+    </div>
+
+    <p class="site-footer__legal">
+      © {year}
+      {site.name}. Prices may vary on delivery apps. Hours can change — call ahead.
+    </p>
+  </div>
+</footer>

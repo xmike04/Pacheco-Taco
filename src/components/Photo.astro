@@ -1,0 +1,43 @@
+---
+// A framed (or cut-out) real photo, optimised by Astro (AVIF/WebP + srcset + dimensions).
+// Entries come from src/data/photos.ts; files live in src/assets/photos/.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { PhotoEntry } from '../data/photos';
+
+interface Props {
+  entry: PhotoEntry;
+  widths?: number[];
+  sizes?: string;
+  /** Above-the-fold images: eager + high priority. Everything else lazy-loads. */
+  eager?: boolean;
+  class?: string;
+}
+
+const { entry, widths = [480, 800, 1200], sizes = '100vw', eager = false, class: cls } = Astro.props;
+
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/photos/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+});
+const meta = files[`/src/assets/photos/${entry.file}`]?.default;
+
+// Fail loudly: a manifest entry without a file (or without alt text) is a bug, not a blank box.
+if (!meta) throw new Error(`photos.ts lists "${entry.file}" but src/assets/photos/${entry.file} does not exist.`);
+if (!entry.alt?.trim() || /^todo/i.test(entry.alt.trim()))
+  throw new Error(`photos.ts entry "${entry.file}" needs real alt text (describe the food), not a TODO.`);
+
+const shape = entry.shape ?? 'frame';
+---
+
+<figure class:list={['photo', `photo--${shape}`, cls]}>
+  <Image
+    src={meta}
+    alt={entry.alt}
+    widths={widths}
+    sizes={sizes}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding={eager ? 'sync' : 'async'}
+    style={entry.position ? `object-position:${entry.position}` : undefined}
+  />
+</figure>

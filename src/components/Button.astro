@@ -1,0 +1,40 @@
+---
+// Design-system Button (pt-btn). One primary per view; queso = delivery/ordering; ghost = the rest.
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'queso' | 'ghost';
+  icon?: string;
+  iconAfter?: string;
+  /** Icon-only button: the slot becomes the accessible name. */
+  iconOnly?: boolean;
+  external?: boolean;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  icon,
+  iconAfter,
+  iconOnly = false,
+  external = false,
+  class: cls,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  class:list={['pt-btn', `pt-btn--${variant}`, iconOnly && 'pt-btn--icon', cls]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  {...rest}
+>
+  {icon && <Icon name={icon} />}
+  {iconOnly ? <span class="sr-only"><slot /></span> : <slot />}
+  {iconAfter && <Icon name={iconAfter} />}
+  {external && <span class="sr-only"> (opens in a new tab)</span>}
+</a>
