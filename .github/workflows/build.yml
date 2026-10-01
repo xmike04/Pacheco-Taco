@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Tokens are in sync with design/tokens.json
+        run: |
+          npm run tokens
+          git diff --exit-code src/styles/tokens.css
+      - name: Photo manifest matches the photo folder
+        run: npm run photos -- --check
+      - run: npm run build
