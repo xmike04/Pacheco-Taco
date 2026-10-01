@@ -77,21 +77,29 @@ const fmt = (hhmm: string) => {
   return `${h12}${m ? ':' + String(m).padStart(2, '0') : ''} ${h >= 12 ? 'PM' : 'AM'}`;
 };
 
+const formatters = new Map<string, Intl.DateTimeFormat>();
+
 /** "Now" in the restaurant's time zone, whatever the visitor's clock says. */
 function nowIn(tz: string) {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: tz,
-    weekday: 'short',
-    hour: 'numeric',
-    minute: 'numeric',
-    hourCycle: 'h23',
-  }).formatToParts(new Date());
+  let fmtr = formatters.get(tz);
+  if (!fmtr) {
+    // constructing an Intl formatter with a time zone is the costly part — do it once
+    fmtr = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      weekday: 'short',
+      hour: 'numeric',
+      minute: 'numeric',
+      hourCycle: 'h23',
+    });
+    formatters.set(tz, fmtr);
+  }
+  const parts = fmtr.formatToParts(new Date());
   const get = (type: string) => parts.find((p) => p.type === type)?.value ?? '0';
   return { day: WEEKDAY[get('weekday')] ?? 0, min: (Number(get('hour')) % 24) * 60 + Number(get('minute')) };
 }
 
-function statusFor(p: HoursPayload) {
-  const { day, min } = nowIn(p.tz);
+function statusFor(p: HoursPayload, now: { day: number; min: number }) {
+  const { day, min } = now;
   const byDay = new Map(p.days.map((x) => [x.d, x]));
   const today = byDay.get(day);
   if (today?.o && today.c) {
@@ -108,13 +116,14 @@ function statusFor(p: HoursPayload) {
 
 function renderStatus() {
   if (!payload) return;
-  const s = statusFor(payload);
+  const now = nowIn(payload.tz);
+  const s = statusFor(payload, now);
   document.querySelectorAll<HTMLElement>('[data-open-status]').forEach((el) => {
     el.hidden = false;
     el.dataset.state = s.open ? 'open' : 'closed';
     el.textContent = s.text;
   });
-  const { day } = nowIn(payload.tz);
+  const { day } = now;
   document.querySelectorAll<HTMLElement>('tr[data-day]').forEach((row) => {
     const today = Number(row.dataset.day) === day;
     const tag = row.querySelector('.today-tag');

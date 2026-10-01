@@ -14,5 +14,7 @@ export default defineConfig({
   site,
   output: 'static',
   compressHTML: true,
+  // The whole stylesheet is ~6KB gzipped: inlining it removes a render-blocking request.
+  build: { inlineStylesheets: 'always' },
   devToolbar: { enabled: false },
 });

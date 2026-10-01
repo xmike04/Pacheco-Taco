@@ -91,6 +91,8 @@ Not touched: `bundle.css` is a verbatim copy; everything else extends it in `sit
 
 ## Quality checks that were run
 
+- Lighthouse (local build; "mobile" = simulated Slow 4G + 4× CPU slowdown): Performance **99**, Accessibility **100**,
+  Best Practices **100**, SEO **100** on both pages (desktop: 100 across); mobile LCP 2.0–2.2 s, CLS 0
 - axe-core (WCAG 2.0/2.1/2.2 A/AA + best practices): **0 violations** across 2 pages × 3 viewports × 2 themes
 - No horizontal overflow at 390 / 820 / 1440; no console errors; no failed requests
 - Behavior tests: theme persistence and OS-following, `<dialog>` mobile menu (focus, Esc, link, resize), "open now" logic
