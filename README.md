@@ -58,19 +58,21 @@ in the code with a `VERIFY` / `⚠` comment.
 7. **"Call us"** — the design doc says "Call or text". It's unknown whether (972) 375-7960 takes texts, so the site
    only says call. If it does, add an `sms:` link.
 8. **Amenities** (Take-out, Delivery, Wheelchair accessible) come from the Yelp listing's attributes.
-9. **Photos.** None yet — see below.
+9. **Photo rights** — see below.
 
 ## Photos
 
-The brand rule is *real photos of the real food — no stock, no AI*. There are no photos in the repo yet, so every
-photo slot shows brand graphics (sun burst, stickers) and nothing looks broken. `photos/README.md` has the shot list
-and the three-step process (`npm run photos` strips GPS, resizes, and prints manifest stubs). Layouts for every slot —
-hero photo, hero **cut-out PNG**, 2–5 photo strip, story, visit, menu-card thumbnails — were tested with synthetic images.
+14 real photos from the restaurant's Yelp gallery (curated from 173 supplied in `pacheco-yelp-gallery.zip`) are in
+`src/assets/photos/`: hero, five-photo strip, team portrait (story), taproom (visit) and six menu-card thumbnails.
+Picked for brand fit (Pacheco-branded paper, warm light), no customers' faces, current Four Corners location only.
 
-**Where the photos should come from:** the family's own phone originals first; failing that, photos the business itself
-posted. Photos customers uploaded to Yelp belong to those customers, and Yelp blocks automated downloading (DataDome),
-which this project does not try to get around. This repository is **public** — don't commit raw phone photos (GPS) or
-anyone else's photos. Put originals in `photos/originals/` (git-ignored); only the processed copies get committed.
+**Rights are not cleared.** Yelp customers took most of these photos, so they belong to those customers, not to Yelp or
+the restaurant. Every entry in `src/data/photos.ts` carries that caveat in `credit`. Before launch, get the family's own
+originals or each photographer's permission and swap the files (same names, or edit the manifest). This repository is
+public, so the photos are public too.
+
+Adding or replacing photos: `photos/README.md` (shot list, `npm run photos` strips GPS and resizes).
+Without a photo, a slot falls back to brand graphics.
 
 ## Where this departs from the design doc (and why)
 

@@ -33,4 +33,22 @@ export interface PhotoEntry {
   credit?: string;
 }
 
-export const photos: PhotoEntry[] = [];
+const CREDIT =
+  'Yelp user photo — rights NOT confirmed; get permission or replace before launch';
+
+export const photos: PhotoEntry[] = [
+  { file: 'hero-smash-burger.jpg', slot: 'hero', alt: "Smash burger with melted American cheese in a black basket lined with Pacheco Taco N Burger paper", position: '50% 55%', credit: CREDIT },
+  { file: 'strip-sauce-drizzle.jpg', slot: 'strip', alt: "Sauce squeezed from a bottle onto a burger on a Pacheco-branded metal tray", credit: CREDIT },
+  { file: 'strip-tacos-and-fries.jpg', slot: 'strip', alt: "Tacos and loaded fries in red baskets lined with Pacheco paper", credit: CREDIT },
+  { file: 'strip-carne-asada-fries.jpg', slot: 'strip', alt: "Carne asada fries topped with steak, queso, crema and salsa verde", credit: CREDIT },
+  { file: 'strip-taco-lime.jpg', slot: 'strip', alt: "Taco with salsa and a lime wedge in a foam clamshell", credit: CREDIT },
+  { file: 'strip-burger-loaded-fries.jpg', slot: 'strip', alt: "Cheeseburger beside fries loaded with steak, crema and bacon", credit: CREDIT },
+  { file: 'story-team.jpg', slot: 'story', alt: "Two Pacheco team members in black Pacheco hoodies, laughing together", position: '50% 40%', credit: CREDIT },
+  { file: 'visit-taproom.jpg', slot: 'visit', alt: "Four Corners Brewing taproom with the red FCBC sign and yellow barstools", credit: CREDIT },
+  { file: 'menu-smash-burger.jpg', slot: 'menu', menu: 'smash-burger', alt: "Double smash burger with American cheese and a pickle on a Pacheco tray", credit: CREDIT },
+  { file: 'menu-carne-asada-fries.jpg', slot: 'menu', menu: 'carne-asada-fries', alt: "Crinkle-cut carne asada fries with steak, crema and bacon", credit: CREDIT },
+  { file: 'menu-tacos.jpg', slot: 'menu', menu: 'two-tacos', alt: "Tacos with pickled red onion, salsa verde and chipotle crema, with lime", credit: CREDIT },
+  { file: 'menu-pollo-chingon.jpg', slot: 'menu', menu: 'pollo-chingon', alt: "Crispy fried chicken sandwich with lettuce beside crinkle fries", credit: CREDIT },
+  { file: 'menu-loaded-nachos.jpg', slot: 'menu', menu: 'loaded-nachos', alt: "Loaded nachos with queso and cilantro in a red checkered basket", credit: CREDIT },
+  { file: 'menu-aguas-frescas.jpg', slot: 'menu', menu: 'aguas-frescas', alt: "Bottled agua fresca with the Pacheco Taco N Burger logo", credit: CREDIT },
+];
