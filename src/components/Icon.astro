@@ -1,0 +1,10 @@
+---
+// Design-system icon: a CSS mask so it takes currentColor and follows the theme.
+interface Props {
+  name: string;
+  class?: string;
+}
+const { name, class: cls } = Astro.props;
+---
+
+<span class:list={['pt-icon', cls]} style={`--icon:url(/assets/icons/${name}.svg)`} aria-hidden="true"></span>

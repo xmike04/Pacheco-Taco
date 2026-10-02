@@ -1,0 +1,24 @@
+---
+// Slow marquee of dish names on the sign's black ground. Decorative: hidden from assistive tech,
+// static (no motion) when the visitor prefers reduced motion.
+import { allItems } from '../data/menu';
+
+const names = allItems.filter((i) => !i.flavors).map((i) => i.name);
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      [0, 1].map(() => (
+        <div class="marquee__group">
+          {names.map((n) => (
+            <>
+              <span>{n}</span>
+              <span class="marquee__star">★</span>
+            </>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>

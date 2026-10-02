@@ -8,33 +8,41 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Bowlby One";
-  src: url("/fonts/BowlbyOne-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
   font-family: "Work Sans";
   src: url("/fonts/WorkSans-VF.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/fonts/BarlowCondensed-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/fonts/BarlowCondensed-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --font-script: Shrikhand, Georgia, serif;
-  --font-display: "Bowlby One", Impact, "Arial Black", sans-serif;
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
   --font-sans: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-condensed: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
   --size-script-hero: 88px;
   --lh-script-hero: 0.95;
-  --size-display-xl: 64px;
+  --size-display-xl: 96px;
   --lh-display-xl: 1;
-  --size-display-lg: 44px;
+  --size-display-lg: 60px;
   --lh-display-lg: 1.05;
-  --size-display-md: 26px;
+  --size-display-md: 30px;
   --lh-display-md: 1.15;
-  --size-eyebrow: 14px;
+  --size-eyebrow: 15px;
   --lh-eyebrow: 1.2;
   --size-body-lg: 19px;
   --lh-body-lg: 30px;
@@ -61,40 +69,43 @@
   --radius-pill: 999px;
   --border-thick: 3px;
   --border-thin: 2px;
-  --surface-000: #fbf3e4;
-  --surface-100: #f1e2c4;
-  --surface-200: #e7d3ae;
-  --ink: #1e1611;
-  --ink-muted: #6b5a4c;
-  --line: #d9c49c;
-  --chile: #bd2b19;
-  --chile-deep: #8f1f10;
-  --on-chile: #fbf3e4;
+  --surface-000: #f7f3ec;
+  --surface-100: #ece6db;
+  --surface-200: #ddd5c7;
+  --ink: #111111;
+  --ink-muted: #5c5750;
+  --line: #cfc7b8;
+  --chile: #b03508;
+  --chile-deep: #8f2d08;
+  --on-chile: #fbf7ef;
   --queso: #f4b528;
   --on-queso: #1e1611;
   --nopal: #2e6a3a;
   --on-nopal: #fbf3e4;
   --jamaica: #9b2757;
   --on-jamaica: #fbf3e4;
-  --focus: #1e1611;
-  --shadow-sticker: 5px 5px 0 0 #1e1611;
-  --shadow-sticker-color: #1e1611;
-  --shadow-sticker-sm: 3px 3px 0 0 #1e1611;
-  --shadow-sticker-sm-color: #1e1611;
+  --focus: #111111;
+  --sign: #f2602f;
+  --hero-ground: #0d0d0d;
+  --on-hero: #ffffff;
+  --shadow-sticker: 5px 5px 0 0 #111111;
+  --shadow-sticker-color: #111111;
+  --shadow-sticker-sm: 3px 3px 0 0 #111111;
+  --shadow-sticker-sm-color: #111111;
   color-scheme: light;
 }
 
 /* Explicit choice (set by the theme toggle / head script) */
 :root[data-theme="dark"] {
-  --surface-000: #17110d;
-  --surface-100: #261c16;
-  --surface-200: #33271f;
-  --ink: #fbf3e4;
-  --ink-muted: #bba994;
-  --line: #43352b;
-  --chile: #f0644a;
-  --chile-deep: #ff8a73;
-  --on-chile: #1e1611;
+  --surface-000: #0e0e0e;
+  --surface-100: #1a1a1a;
+  --surface-200: #272727;
+  --ink: #f7f3ec;
+  --ink-muted: #b5afa5;
+  --line: #3a3a3a;
+  --chile: #ff6a3d;
+  --chile-deep: #ff8a63;
+  --on-chile: #111111;
   --queso: #f6c14e;
   --on-queso: #1e1611;
   --nopal: #6fbf7c;
@@ -102,6 +113,9 @@
   --jamaica: #e07aa6;
   --on-jamaica: #1e1611;
   --focus: #f6c14e;
+  --sign: #f2602f;
+  --hero-ground: #0d0d0d;
+  --on-hero: #ffffff;
   --shadow-sticker: 5px 5px 0 0 #000000;
   --shadow-sticker-color: #000000;
   --shadow-sticker-sm: 3px 3px 0 0 #000000;
@@ -112,15 +126,15 @@
 /* No-JS fallback: follow the OS unless the visitor picked a theme */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --surface-000: #17110d;
-    --surface-100: #261c16;
-    --surface-200: #33271f;
-    --ink: #fbf3e4;
-    --ink-muted: #bba994;
-    --line: #43352b;
-    --chile: #f0644a;
-    --chile-deep: #ff8a73;
-    --on-chile: #1e1611;
+    --surface-000: #0e0e0e;
+    --surface-100: #1a1a1a;
+    --surface-200: #272727;
+    --ink: #f7f3ec;
+    --ink-muted: #b5afa5;
+    --line: #3a3a3a;
+    --chile: #ff6a3d;
+    --chile-deep: #ff8a63;
+    --on-chile: #111111;
     --queso: #f6c14e;
     --on-queso: #1e1611;
     --nopal: #6fbf7c;
@@ -128,6 +142,9 @@
     --jamaica: #e07aa6;
     --on-jamaica: #1e1611;
     --focus: #f6c14e;
+    --sign: #f2602f;
+    --hero-ground: #0d0d0d;
+    --on-hero: #ffffff;
     --shadow-sticker: 5px 5px 0 0 #000000;
     --shadow-sticker-color: #000000;
     --shadow-sticker-sm: 3px 3px 0 0 #000000;

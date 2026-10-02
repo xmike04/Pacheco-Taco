@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+*.log
+
+# Raw phone photos carry GPS/EXIF. Only the processed copies in src/assets/photos/ are committed.
+photos/originals/*
+!photos/originals/.gitkeep

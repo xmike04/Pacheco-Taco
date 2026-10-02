@@ -1,0 +1,14 @@
+---
+// "PACHECO / TACO N BURGER" set in type, after their signage (white on black, orange-red below).
+// This is a typographic rendition, not their logo file — swap in the real vector mark when the family supplies it.
+interface Props {
+  tone?: 'auto' | 'on-dark';
+  class?: string;
+}
+const { tone = 'auto', class: cls } = Astro.props;
+---
+
+<span class:list={['wordmark', tone === 'on-dark' && 'wordmark--on-dark', cls]} aria-hidden="true">
+  <span class="wordmark__name">Pacheco</span>
+  <span class="wordmark__sub">Taco N Burger</span>
+</span>

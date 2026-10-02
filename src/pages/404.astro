@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Page not found | Pacheco Taco N Burger"
+  description="That page isn't on the menu."
+  path="/404.html"
+  noindex
+  preloadScript
+>
+  <section class="section notfound">
+    <div class="container notfound__inner">
+      <p class="pt-script notfound__script">¡Órale!</p>
+      <h1 class="display-lg">That page isn't on the menu.</h1>
+      <p class="lead">Let's get you back to the good stuff.</p>
+      <div class="section-cta">
+        <Button href="/menu/" variant="primary" iconAfter="arrow-right">See the menu</Button>
+        <Button href="/" variant="ghost">Back home</Button>
+        <Button href={`tel:${site.phone.tel}`} variant="ghost" icon="phone">Call us</Button>
+      </div>
+    </div>
+  </section>
+</Base>

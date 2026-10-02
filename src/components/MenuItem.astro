@@ -1,0 +1,72 @@
+---
+// Design-system MenuItem (pt-item): name, dotted leader, price, description, 0–2 tags.
+import Tag from './Tag.astro';
+import Photo from './Photo.astro';
+import { photos } from '../data/photos';
+import { formatPrice, PROTEINS, type MenuItem } from '../data/menu';
+
+interface Props {
+  item: MenuItem;
+}
+const { item } = Astro.props;
+const photo = photos.find((p) => p.slot === 'menu' && p.menu === item.id);
+const tags = item.tags ?? [];
+---
+
+<article class:list={['pt-item reveal', photo && 'pt-item--photo']} id={`item-${item.id}`}>
+  {
+    photo && (
+      <Photo
+        entry={photo}
+        widths={[320, 520, 760]}
+        sizes="(min-width: 961px) 280px, (min-width: 721px) 40vw, 90vw"
+        class="pt-item__photo"
+      />
+    )
+  }
+  <div class="pt-item__head">
+    <h3 class="pt-item__name">{item.name}</h3>
+    {item.price != null && <span class="pt-item__leader" aria-hidden="true" />}
+    {item.price != null && <span class="pt-item__price">{formatPrice(item.price)}</span>}
+  </div>
+  <p class="pt-item__desc">{item.description}</p>
+  {
+    item.proteins && (
+      <ul class="pt-item__flavors" aria-label="Choice of protein">
+        {PROTEINS.map((x) => (
+          <li>
+            <Tag>{x}</Tag>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    item.flavors && (
+      <ul class="pt-item__flavors" aria-label="Flavors">
+        {item.flavors.map((f) => (
+          <li>
+            <Tag kind="jamaica">{f}</Tag>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    tags.length > 0 && (
+      <div class="pt-item__tags">
+        {tags.includes('favorite') && (
+          <Tag kind="queso" icon="star">
+            Fan favorite
+          </Tag>
+        )}
+        {tags.includes('spicy') && (
+          <Tag kind="chile" icon="flame">
+            Spicy
+          </Tag>
+        )}
+        {tags.includes('fresh') && <Tag kind="nopal">Fresh</Tag>}
+      </div>
+    )
+  }
+</article>

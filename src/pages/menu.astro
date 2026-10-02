@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import MenuItem from '../components/MenuItem.astro';
+import Button from '../components/Button.astro';
+import Divider from '../components/Divider.astro';
+import { site } from '../data/site';
+import { menu } from '../data/menu';
+---
+
+<Base
+  title="Menu | Pacheco Taco N Burger, Dallas"
+  description={`Smash burgers, tacos, loaded fries and nachos, fried chicken sandwiches and aguas frescas at Pacheco Taco N Burger in The Cedars, Dallas. Call ${site.phone.display}.`}
+  path="/menu/"
+  current="menu"
+>
+  <header class="page-head">
+    <div class="container">
+      <p class="pt-eyebrow">{site.neighborhood} · {site.city}</p>
+      <h1 class="display-xl">The menu</h1>
+      <p class="lead">Smashed to order. Seasoned with love. Get it while it's hot.</p>
+    </div>
+  </header>
+
+  <nav class="catnav" aria-label="Menu sections">
+    <div class="container">
+      <ul class="catnav__list">
+        {
+          menu.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container menu-page">
+    {
+      menu.map((section, i) => (
+        <>
+          {i > 0 && <Divider />}
+          <section class="menu-section" id={section.id} aria-labelledby={`${section.id}-h`}>
+            <header class="menu-section__head reveal">
+              <h2 class="display-lg" id={`${section.id}-h`}>
+                {section.title}
+              </h2>
+              {section.blurb && <p class="menu-section__blurb">{section.blurb}</p>}
+            </header>
+            <div class="pt-menu">
+              {section.items.map((item) => (
+                <MenuItem item={item} />
+              ))}
+            </div>
+          </section>
+        </>
+      ))
+    }
+
+    <p class="fine-print">Ask at the counter for today's prices. Ask us about ingredients and allergens.</p>
+
+    <div class="section-cta">
+      <Button href={site.links.order} variant="primary" icon="bag" external>Order online</Button>
+      <Button href={`tel:${site.phone.tel}`} variant="ghost" icon="phone">Call {site.phone.display}</Button>
+    </div>
+  </div>
+</Base>

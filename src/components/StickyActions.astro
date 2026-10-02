@@ -1,0 +1,11 @@
+---
+// Mobile-only action bar: the three things people do from a phone — order, call, get there.
+import Button from './Button.astro';
+import { site } from '../data/site';
+---
+
+<nav class="sticky-actions" aria-label="Quick actions">
+  <Button href={site.links.order} variant="primary" icon="bag" external>Order</Button>
+  <Button href={`tel:${site.phone.tel}`} variant="ghost" icon="phone">Call</Button>
+  <Button href={site.links.directions} variant="ghost" icon="map-pin" external>Directions</Button>
+</nav>

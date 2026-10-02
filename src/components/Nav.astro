@@ -1,0 +1,84 @@
+---
+// Design-system Nav: sticky bar, lockup left, 3 links, Order right. Below 721px the links
+// collapse into a full-screen sheet on chile (native <dialog>: focus trap + Esc for free).
+// Phone is a tel: link in the header at every width (icon-only on small screens).
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import { site, fullAddress } from '../data/site';
+
+interface Props {
+  current?: 'menu';
+}
+const { current } = Astro.props;
+
+const links = [
+  { href: '/menu/', label: 'Menu', key: 'menu' },
+  { href: '/#visit', label: 'Visit', key: 'visit' },
+  { href: '/#story', label: 'Our story', key: 'story' },
+];
+const tel = `tel:${site.phone.tel}`;
+---
+
+<header class="site-header">
+  <nav class="pt-nav" aria-label="Main">
+    <a class="pt-nav__home" href="/" aria-label={`${site.name} — home`}>
+      <Wordmark />
+    </a>
+
+    <ul class="pt-nav__links">
+      {
+        links.map((l) => (
+          <li>
+            <a class="pt-nav__link" href={l.href} aria-current={current === l.key ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="nav-actions">
+      <Button href={tel} variant="ghost" icon="phone" iconOnly class="nav-call nav-call--icon">
+        Call {site.phone.display}
+      </Button>
+      <Button href={tel} variant="ghost" icon="phone" class="nav-call nav-call--full">{site.phone.display}</Button>
+      <Button href={site.links.order} variant="primary" icon="bag" external class="nav-order">Order</Button>
+      <button
+        class="pt-btn pt-btn--ghost pt-btn--icon nav-toggle"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="menu-sheet"
+        data-menu-open
+      >
+        <Icon name="menu" /><span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </nav>
+
+  <dialog id="menu-sheet" class="sheet" aria-label="Site menu">
+    <div class="sheet__bar">
+      <Wordmark tone="on-dark" class="sheet__logo" />
+      <button class="pt-btn pt-btn--ghost pt-btn--icon" type="button" data-menu-close>
+        <Icon name="close" /><span class="sr-only">Close menu</span>
+      </button>
+    </div>
+    <nav aria-label="Mobile">
+      <ul class="sheet__links">
+        {links.map((l, i) => (
+          <li style={`--i:${i}`}>
+            <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="sheet__actions">
+      <Button href={site.links.order} variant="queso" icon="bag" external>Order online</Button>
+      <Button href={tel} variant="ghost" icon="phone">Call {site.phone.display}</Button>
+      <Button href={site.links.directions} variant="ghost" icon="map-pin" external>Get directions</Button>
+    </div>
+    <p class="sheet__meta">{fullAddress}<br />Inside {site.inside}</p>
+  </dialog>
+</header>

@@ -1,0 +1,48 @@
+---
+// Design-system InfoCard: location, hours and phone — the three things a hungry visitor scrolls for.
+// Keep identical to Google / Yelp (NAP consistency matters for local search).
+import Icon from './Icon.astro';
+import { site, openDaysSummary, closedDays } from '../data/site';
+
+const closed = closedDays();
+---
+
+<section class="info-wrap" aria-label="Location, hours and phone">
+  <div class="container">
+    <div class="pt-info">
+      <div class="pt-info__cell">
+        <Icon name="map-pin" />
+        <div>
+          <p class="pt-info__label">Find us</p>
+          <p class="pt-info__value">
+            <a href={site.links.maps} target="_blank" rel="noopener">
+              {site.address.street}<br />
+              {site.address.city}, {site.address.region}
+              {site.address.postalCode}<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
+          <p class="pt-info__sub">Inside {site.inside}</p>
+        </div>
+      </div>
+      <div class="pt-info__cell">
+        <Icon name="clock" />
+        <div>
+          <p class="pt-info__label">Hours</p>
+          <p class="pt-info__value">{openDaysSummary()}</p>
+          <p class="pt-info__sub">
+            <span class="open-status" data-open-status hidden></span>
+            <span class="open-status-fallback">Closed {closed.join(', ')} · <a href="/#hours">all hours</a></span>
+          </p>
+        </div>
+      </div>
+      <div class="pt-info__cell">
+        <Icon name="phone" />
+        <div>
+          <p class="pt-info__label">Call us</p>
+          <p class="pt-info__value"><a href={`tel:${site.phone.tel}`}>{site.phone.display}</a></p>
+          <p class="pt-info__sub">Take-out &amp; delivery</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
