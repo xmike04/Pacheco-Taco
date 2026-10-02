@@ -541,7 +541,7 @@ address {
 }
 /* Mixed photo / no-photo cards: size to content instead of stretching blank boxes. */
 .pt-menu:has(.pt-item--photo) {
-  align-items: start;
+  align-items: stretch;
 }
 /* Home "Start here": six picks on larger screens, four on phones. */
 @media (max-width: 720px) {
@@ -555,7 +555,7 @@ address {
 }
 .pt-item__photo {
   margin: 0 calc(var(--space-6) * -1) var(--space-2);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   border-bottom: var(--border-thick) solid var(--ink);
 }
 .pt-item__photo img {
@@ -993,4 +993,474 @@ address {
 }
 .notfound__script {
   font-size: clamp(4rem, 14vw, var(--size-script-hero));
+}
+
+/* ==========================================================================
+   Signage rebrand — matches their real sign and in-store board:
+   white + black + orange-red, bold condensed caps. Shrikhand survives only as
+   a small accent. Colours/type come from tokens (design/tokens.json).
+   ========================================================================== */
+:root {
+  --header-h: 71px;
+}
+@media (min-width: 721px) {
+  :root {
+    --header-h: 79px;
+  }
+}
+
+.display-xl,
+.display-lg,
+.hero h1,
+.pt-item__name,
+.hours-card__title,
+.sheet__links a {
+  font-weight: 800;
+}
+.display-xl {
+  font-size: clamp(3.25rem, 1.6rem + 7.2vw, 6rem);
+  line-height: 0.92;
+}
+.display-lg {
+  font-size: clamp(2.5rem, 1.5rem + 4.2vw, 3.75rem);
+  line-height: 0.95;
+}
+.pt-eyebrow {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.pt-nav a.pt-nav__link {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.pt-tag {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.pt-item__name {
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.pt-info__label {
+  font-size: 15px;
+  font-weight: 700;
+}
+.hours-card__title {
+  font-size: 34px;
+}
+.menu-section__head .display-lg {
+  font-size: 3rem;
+}
+.sheet__links a {
+  font-size: clamp(2.75rem, 14vw, 4.5rem);
+}
+
+/* Typeset wordmark */
+.pt-nav__home {
+  line-height: 1;
+}
+.wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.86;
+  white-space: nowrap;
+}
+.wordmark__name {
+  font-weight: 800;
+  font-size: 2.45rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.wordmark__sub {
+  margin-top: 3px;
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.075em;
+  color: var(--chile);
+}
+.wordmark--on-dark .wordmark__name {
+  color: var(--on-hero);
+}
+.wordmark--on-dark .wordmark__sub {
+  color: var(--sign);
+}
+
+/* Hero: the sign's black ground */
+.hero {
+  background: var(--hero-ground);
+  color: var(--on-hero);
+  --focus: #fff;
+}
+.hero h1 {
+  font-size: clamp(3.75rem, 1.4rem + 10vw, 7.25rem);
+  line-height: 0.88;
+  color: var(--on-hero);
+}
+.hero h1 .pt-script {
+  color: var(--sign);
+  font-size: 0.72em;
+  text-shadow: none;
+}
+.hero p.pt-hero__kicker {
+  color: var(--sign);
+}
+.hero p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+}
+.hero .pt-btn--ghost {
+  color: #fff;
+  border-color: #fff;
+}
+.hero .pt-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.hero .pt-btn--queso {
+  border-color: #fff;
+  box-shadow: 3px 3px 0 0 var(--sign);
+}
+.hero .open-status {
+  border-color: #fff;
+}
+.hero .sticker--smashed {
+  filter: drop-shadow(3px 3px 0 var(--sign));
+}
+.hero .photo--frame {
+  border-color: #fff;
+  box-shadow: 8px 8px 0 0 var(--sign);
+}
+
+/* Mobile sheet on the black ground */
+.sheet {
+  background: var(--hero-ground);
+  color: var(--on-hero);
+  --focus: #fff;
+}
+.sheet::backdrop {
+  background: var(--hero-ground);
+}
+.sheet .pt-btn--ghost {
+  color: #fff;
+  border-color: #fff;
+}
+.sheet .pt-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.sheet__links a {
+  color: var(--on-hero);
+  border-bottom-color: var(--sign);
+}
+
+/* Footer avatar */
+.pt-footer__seal {
+  width: 88px;
+  height: 88px;
+}
+
+/* ==========================================================================
+   Motion. Principles: transform/opacity only (compositor-friendly), nothing that
+   hides content from people who can't or don't want animation, and all of it
+   behind prefers-reduced-motion. Uses the individual translate/scale/rotate
+   properties so it composes with the tilted-photo `transform`s instead of
+   replacing them.
+   ========================================================================== */
+
+/* Marquee band (static when motion is reduced) */
+.marquee {
+  overflow: hidden;
+  background: var(--hero-ground);
+  color: var(--on-hero);
+  border-block: var(--border-thick) solid var(--ink);
+  padding: 14px 0 10px;
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+}
+.marquee__group {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+  font: 800 clamp(1.9rem, 1.2rem + 2.2vw, 3rem) / 1 var(--font-display);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.marquee__star {
+  color: var(--sign);
+  font-size: 0.7em;
+}
+
+/* Instagram band */
+.insta {
+  background: var(--hero-ground);
+  color: var(--on-hero);
+  --focus: #fff;
+  padding-block: var(--space-16);
+}
+.insta__grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 961px) {
+  .insta__grid:has(.insta__video) {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+.insta__copy {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  max-width: 36rem;
+}
+.insta .pt-eyebrow {
+  color: var(--sign);
+}
+.insta .display-lg,
+.insta .lead {
+  color: var(--on-hero);
+}
+.insta .pt-btn--queso {
+  border-color: #fff;
+  box-shadow: 3px 3px 0 0 var(--sign);
+}
+.insta__video {
+  justify-self: center;
+  width: min(100%, 360px);
+}
+.insta__facade,
+.insta__video iframe {
+  width: 100%;
+  aspect-ratio: 9 / 14;
+  border: var(--border-thick) solid #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 8px 8px 0 0 var(--sign);
+  background: #1a1a1a;
+}
+.insta__facade {
+  display: grid;
+  place-content: center;
+  gap: var(--space-3);
+  color: #fff;
+  font: 800 1.5rem/1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.insta__play {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-inline: auto;
+  border-radius: 50%;
+  background: var(--sign);
+  color: #fff;
+  font-size: 1.6rem;
+  padding-left: 5px;
+}
+
+/* Menu page: current section chip */
+.catnav__list a[aria-current='true'] {
+  background: var(--ink);
+  color: var(--surface-000);
+}
+.pt-item__flavors {
+  margin-top: var(--space-1);
+}
+
+/* Open-now pulse dot */
+.open-status[data-state='open']::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* --- marquee --- */
+  .marquee__track {
+    animation: marquee 42s linear infinite;
+  }
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  /* --- hero entrance, staggered --- */
+  .hero__copy > * {
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero__copy > :nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .hero__copy > :nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .hero__copy > :nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .hero__copy > :nth-child(4) {
+    animation-delay: 0.42s;
+  }
+  .hero__copy > :nth-child(5) {
+    animation-delay: 0.55s;
+  }
+  .hero__photo,
+  .hero .sun {
+    animation:
+      photo-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both,
+      float 7s ease-in-out 1.4s infinite alternate;
+  }
+  .hero .sticker--smashed {
+    animation: slap 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) 0.9s both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 28px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+  @keyframes photo-in {
+    from {
+      opacity: 0;
+      translate: 0 40px;
+      scale: 0.92;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+  @keyframes float {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 0 -8px;
+    }
+  }
+  @keyframes slap {
+    0% {
+      opacity: 0;
+      scale: 1.9;
+      rotate: -18deg;
+    }
+    60% {
+      opacity: 1;
+      scale: 0.92;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+      rotate: 0deg;
+    }
+  }
+
+  /* --- open-now pulse --- */
+  .open-status[data-state='open']::before {
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.35;
+      scale: 0.7;
+    }
+  }
+
+  /* --- hover: cards lift into their hard shadow, photos zoom --- */
+  .pt-item {
+    transition:
+      translate 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  .pt-item:hover {
+    translate: -3px -3px;
+    box-shadow: 8px 8px 0 0 var(--ink);
+  }
+  .pt-item__photo img,
+  .strip__photo img {
+    transition: scale 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .pt-item:hover .pt-item__photo img,
+  .strip__photo:hover img {
+    scale: 1.07;
+  }
+  .strip__photo {
+    transition: transform 0.25s ease;
+  }
+  .strip__photo:hover {
+    transform: rotate(0deg) translateY(-6px);
+  }
+  .pt-nav a.pt-nav__link {
+    transition: border-color 0.2s ease;
+  }
+  .insta__play {
+    transition: scale 0.2s ease;
+  }
+  .insta__facade:hover .insta__play {
+    scale: 1.12;
+  }
+
+  /* --- mobile sheet: slide in, links stagger --- */
+  .sheet[open] {
+    animation: sheet-in 0.3s ease-out;
+  }
+  .sheet[open] .sheet__links li {
+    animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(0.08s + var(--i, 0) * 0.07s);
+  }
+  @keyframes sheet-in {
+    from {
+      opacity: 0;
+      translate: 0 -16px;
+    }
+  }
+
+  /* --- scroll reveals: native scroll-driven where supported... --- */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+    .pt-menu > .reveal:nth-child(3n + 2) {
+      animation-range: entry 6% entry 44%;
+    }
+    .pt-menu > .reveal:nth-child(3n + 3) {
+      animation-range: entry 12% entry 50%;
+    }
+  }
+  /* ...and an IntersectionObserver fallback elsewhere (class set by site.ts) */
+  .io-reveal .reveal {
+    opacity: 0;
+    translate: 0 28px;
+    transition:
+      opacity 0.6s ease,
+      translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .io-reveal .reveal.is-in {
+    opacity: 1;
+    translate: 0 0;
+  }
 }

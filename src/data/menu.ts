@@ -1,23 +1,15 @@
 /**
- * The menu. Names, descriptions and prices come from the Uber Eats / Postmates listing
- * (the only complete, structured menu available — fetched 2026-10-01), lightly tidied
- * for case and punctuation.
+ * The menu — modelled on their in-store menu board (photo supplied 2026-10-02): Main Menu,
+ * Chef's Specials, protein choices and aguas frescas. Names and descriptions are as printed.
  *
- * ⚠ PRICES ARE UNVERIFIED. Delivery apps often add a markup (the design doc itself warns
- *   "delivery apps mark up"), and several of these are multiples of $0.60, which looks like
- *   a flat ~20% markup on round in-store prices. Replace with the POS prices before launch.
- *
- * Also seen on other listings but NOT on the Uber Eats snapshot (so not published here —
- * confirm with the family): The Don Smashburger (~$13.50, double patty), Barbacoa Chingon
- * tacos (~2 for $7), Barbacoa Grilled Cheese (~$10).
+ * ⚠ NO PRICES: the board shows none, and the earlier Uber Eats prices were unverified
+ *   (delivery apps mark up). Add `price: 12.5` to an item once the family confirms it and it
+ *   will render automatically.
+ * ⚠ The board is undated — confirm it is the current menu. Dishes from older boards/listings
+ *   that aren't on it (Texas Sun Smash, Single Ceci Smash, The Don, Loaded Nachos variants) are not published.
  */
 
 export type Tag = 'spicy' | 'favorite' | 'fresh';
-
-export interface MenuRow {
-  name: string;
-  price: number;
-}
 
 export interface MenuItem {
   /** Used for in-page links and to attach a photo (see src/data/photos.ts). */
@@ -26,8 +18,8 @@ export interface MenuItem {
   description: string;
   price?: number;
   tags?: Tag[];
-  /** Small, uniform add-ons shown as a single card with dotted-leader rows. */
-  rows?: MenuRow[];
+  /** Shows the "choose your protein" chips. */
+  proteins?: boolean;
   /** Flavour chips (aguas frescas). */
   flavors?: string[];
 }
@@ -39,6 +31,8 @@ export interface MenuSection {
   items: MenuItem[];
 }
 
+export const PROTEINS = ['Fajita', 'Barbacoa', 'Al Pastor', 'Chicken'];
+
 export const menu: MenuSection[] = [
   {
     id: 'burgers',
@@ -48,132 +42,107 @@ export const menu: MenuSection[] = [
       {
         id: 'smash-burger',
         name: 'Smash Burger',
-        price: 13.8,
-        description: '4oz smash patty, special sauce, caramelized onions, American cheese, pickles.',
+        description: 'Special sauce, American cheese, caramelized onions, lettuce.',
         tags: ['favorite'],
       },
       {
-        id: 'texas-sun-smash',
-        name: 'Texas Sun Smash',
-        price: 13.8,
-        description: 'Smash patty, grilled onion, Swiss, pickles and our heat sauce.',
-        tags: ['spicy'],
+        id: 'kelly-house-burger',
+        name: 'Kelly House Burger',
+        description: 'Creamy chipotle, Muenster cheese, poblano & onion, pickles, lettuce.',
       },
       {
-        id: 'single-ceci-smash',
-        name: 'Single Ceci Smash',
-        price: 13.0,
-        description: 'Smash burger with raw onion, lettuce, tomato, special sauce, pickles.',
+        id: 'chorizo-smash',
+        name: 'Chorizo Smash',
+        description:
+          'Beef chorizo patty, creamy chipotle, pickled red onion, lettuce, Muenster cheese, topped with a fried egg.',
       },
     ],
   },
   {
-    id: 'tacos',
-    title: 'Tacos',
+    id: 'specials',
+    title: "Chef's Specials",
     items: [
       {
-        id: 'two-tacos',
-        name: '2 Tacos',
-        price: 7.8,
-        description: 'Meat of choice, cilantro, onion, salsa, lime wedge.',
+        id: 'chopped-and-screwed',
+        name: 'Chopped & Screwed',
+        description:
+          'Beef patties chopped with onion. Topped with American cheese, spicy ketchup, guajillo mayo, lettuce & tomato on a Mexican bollillo.',
       },
-    ],
-  },
-  {
-    id: 'loaded',
-    title: 'Loaded',
-    blurb: 'Fries and nachos, piled high.',
-    items: [
+      {
+        id: 'el-pollo-chingon',
+        name: 'El Pollo Chingon',
+        description: 'Crispy chicken, creamy guajillo, pickles, lettuce.',
+      },
       {
         id: 'carne-asada-fries',
         name: 'Carne Asada Fries',
-        price: 15.6,
-        description: 'Steak fajita, queso, salsa verde, ranch, Mexican crema, cilantro, bacon.',
+        description: 'Queso, steak, ranch, sour cream, salsa verde, cilantro, bacon.',
+      },
+      {
+        id: 'pollito-fries',
+        name: 'Pollito Fries',
+        description: 'Popcorn chicken, sharp cheddar, umami sauce, ranch, cilantro.',
+      },
+    ],
+  },
+  {
+    id: 'tacos-and-more',
+    title: 'Tacos & more',
+    blurb: 'Pick your protein: Fajita, Barbacoa, Al Pastor or Chicken.',
+    items: [
+      {
+        id: 'tacos',
+        name: 'Tacos',
+        description: 'Choice of protein, cilantro, onion, salsa verde.',
+        proteins: true,
+      },
+      {
+        id: 'quesadilla',
+        name: 'Quesadilla',
+        description: 'Muenster cheese, choice of protein.',
+        proteins: true,
+      },
+      {
+        id: 'torta',
+        name: 'Torta',
+        description: 'Choice of protein, pickled red onion, lettuce, chipotle cream, salsa verde.',
+        proteins: true,
+      },
+      {
+        id: 'barbacoa-grilled-cheese',
+        name: 'Barbacoa Grilled Cheese',
+        description: 'Salsa verde, Muenster cheese.',
       },
       {
         id: 'loaded-nachos',
         name: 'Loaded Nachos',
-        price: 18.0,
-        description:
-          'Meat of choice, queso, Mexican crema, green salsa, chipotle crema, cilantro, pickled red onion.',
-      },
-    ],
-  },
-  {
-    id: 'sandwiches',
-    title: 'Sandwiches',
-    items: [
-      {
-        id: 'pollo-chingon',
-        name: 'Pollo Chingon',
-        price: 12.0,
-        description: 'Fried chicken sandwich with special sauce and pickles.',
-      },
-    ],
-  },
-  {
-    id: 'sides',
-    title: 'Sides & salsas',
-    items: [
-      {
-        id: 'basket-of-fries',
-        name: 'Basket of Fries',
-        price: 7.2,
-        description: 'Crispy, golden fries in a basket.',
-      },
-      {
-        id: 'salsas-and-sauces',
-        name: 'Salsas & sauces',
-        description: 'Extra, for dipping.',
-        rows: [
-          { name: 'Green salsa', price: 0.6 },
-          { name: 'Special sauce', price: 0.6 },
-          { name: 'Heat sauce', price: 0.6 },
-          { name: 'Spicy ketchup', price: 1.25 },
-        ],
+        description: 'Choice of protein, queso, Mexican crema, salsa verde, cilantro.',
+        proteins: true,
       },
     ],
   },
   {
     id: 'drinks',
-    title: 'Aguas frescas & drinks',
-    blurb: 'Seven aguas frescas to choose from.',
+    title: 'Aguas frescas',
+    blurb: 'Seven flavors.',
     items: [
       {
         id: 'aguas-frescas',
         name: 'Aguas Frescas',
-        price: 6.0,
         description: 'Pick a flavor:',
-        flavors: [
-          'Horchata',
-          'Ube horchata',
-          'Jamaica',
-          'Tamarindo',
-          'Pineapple lemonade',
-          'Strawberry lemonade',
-          'Cucumber lemonade',
-        ],
-      },
-      {
-        id: 'sodas',
-        name: 'Sodas',
-        price: 3.3,
-        description: 'Diet Coke, Fanta Pineapple, Fanta Strawberry, Fanta Orange, Big Red.',
+        flavors: ['Cucumber lemonade', 'Horchata', 'Ube horchata', 'Mango', 'Jamaica', 'Tamarindo', 'Piña'],
       },
     ],
   },
 ];
 
-/**
- * Home-page "Start here" picks (ids from above). Six fills a 3×2 grid on desktop; on phones
- * only the first four show (see .pt-menu--picks in site.css) to keep the page short.
- */
+/** Home-page "Start here" picks (ids from above). Four show on phones. */
 export const startHere = [
-  'texas-sun-smash',
   'smash-burger',
+  'chorizo-smash',
   'carne-asada-fries',
-  'two-tacos',
-  'pollo-chingon',
+  'tacos',
+  'el-pollo-chingon',
   'loaded-nachos',
 ];
 

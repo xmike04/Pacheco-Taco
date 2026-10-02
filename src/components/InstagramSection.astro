@@ -1,0 +1,34 @@
+---
+// Follow card + an optional click-to-load reel. The reel is only fetched from Instagram after a click
+// (no third-party script or cookies on page load). Set `links.instagramReel` in src/data/site.ts.
+import Button from './Button.astro';
+import { site } from '../data/site';
+
+const reel = site.links.instagramReel;
+const code = reel?.match(/instagram\.com\/(?:reel|p)\/([A-Za-z0-9_-]+)/)?.[1];
+---
+
+<section class="insta" id="instagram" aria-labelledby="insta-h">
+  <div class="container insta__grid">
+    <div class="insta__copy reveal">
+      <p class="pt-eyebrow">Follow along</p>
+      <h2 class="display-lg" id="insta-h">See what's on the flat-top</h2>
+      <p class="lead">New specials, pop-ups and the occasional smash-patty ASMR. Find us on Instagram.</p>
+      <div class="insta__actions">
+        <Button href={site.links.instagram} variant="queso" iconAfter="arrow-right" external>
+          @pachecotaconburger
+        </Button>
+      </div>
+    </div>
+    {
+      code && (
+        <div class="insta__video reveal">
+          <button class="insta__facade" type="button" data-ig={code} aria-label="Play the video from Instagram">
+            <span class="insta__play" aria-hidden="true">▶</span>
+            <span class="insta__facade-text">Play on Instagram</span>
+          </button>
+        </div>
+      )
+    }
+  </div>
+</section>

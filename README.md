@@ -44,14 +44,20 @@ in the code with a `VERIFY` / `⚠` comment.
    The site uses the Apple Maps / Yahoo schedule (**Mon closed · Tue 3–9 PM · Wed 11 AM–9 PM · Thu–Sat 11 AM–9:45 PM ·
    Sun 11 AM–7 PM**). Yelp (via a search summary) shows Wednesday as 3–9 PM; Uber Eats/Postmates shows Monday open and
    closings 15 minutes early (delivery cut-offs). Edit `hours` in `src/data/site.ts`.
-2. **Menu prices.** Names, descriptions and prices come from the Uber Eats / Postmates listing — the only complete menu
-   available. Delivery apps often add a markup (several prices are multiples of $0.60, which looks like a flat ~20%), so
-   treat them as unverified until compared with the POS. Also seen on other listings but not published here: *The Don
-   Smashburger* (~$13.50), *Barbacoa Chingon* tacos (~2 for $7), *Barbacoa Grilled Cheese* (~$10).
+2. **Menu.** Rebuilt from a photo of the in-store board (`src/data/menu.ts`). The board is undated and shows no prices,
+   so **no prices are published** — the menu page says "Ask at the counter". Older dishes seen on delivery listings
+   (Texas Sun Smash, The Don, Single Ceci) aren't on the board and are left out. Confirm the board is current and
+   add `price:` per item once you have the POS prices.
 3. **Order link.** Points to the Uber Eats listing. Swap in a direct ordering URL if there is one (`links.order`).
 4. **Website domain.** No official website was found (Apple Maps lists the Facebook page as the website). A search
    summary mentioned `pachecotaconburger.com` but no result confirms it — don't assume the family owns it.
-5. **Instagram.** `@pachecotaconburger` comes from a Yahoo Local listing; Instagram itself is behind a login wall.
+5. **Instagram.** Profile confirmed (`@pachecotaconburger`). The home page has a click-to-load video slot that stays
+   hidden until you paste a reel URL into `links.instagramReel` (`src/data/site.ts`) — Instagram blocks automated
+   access, so a popular reel couldn't be picked from here.
+   **Brand.** The look follows their signage: Barlow Condensed wordmark, black / cream / orange-red. The wordmark
+   (`Wordmark.astro`) is *typeset*, not their real logo — swap in a vector file when the family has one. The orange
+   (`sign` in `design/tokens.json`) was matched by eye from photos. The footer seal and favicons come from their
+   150px Instagram avatar, so they're a bit soft. Photos are Yelp user uploads with rights unconfirmed (see `photos.ts`).
 6. **Story copy** ("Mom & son. Scratch kitchen.") is the restaurant's own bio line, kept deliberately short.
    Other details seen on Yelp (17 years in Las Vegas kitchens, a culinary-school son, pop-ups since July 2022,
    a Grand Prairie kitchen before Four Corners) are *not* on the site — add them once the family confirms the wording.

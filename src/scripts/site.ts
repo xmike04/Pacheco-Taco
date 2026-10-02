@@ -144,3 +144,58 @@ function renderStatus() {
 
 renderStatus();
 window.setInterval(renderStatus, 60_000);
+
+/* -------------------------------------------------------------- scroll reveals -- */
+// Browsers with scroll-driven animations (animation-timeline) animate .reveal in pure CSS.
+// Elsewhere, an IntersectionObserver does it — only when the visitor allows motion.
+if (
+  window.matchMedia('(prefers-reduced-motion: no-preference)').matches &&
+  !CSS.supports('animation-timeline: view()') &&
+  'IntersectionObserver' in window
+) {
+  root.classList.add('io-reveal');
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+  );
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+}
+
+/* ------------------------------------------------ menu page: current section chip -- */
+const chipList = document.querySelector<HTMLElement>('.catnav__list');
+if (chipList && 'IntersectionObserver' in window) {
+  const chips = [...chipList.querySelectorAll<HTMLAnchorElement>('a')];
+  const byId = new Map(chips.map((a) => [a.getAttribute('href')?.slice(1) ?? '', a]));
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        const chip = e.isIntersecting ? byId.get(e.target.id) : undefined;
+        if (!chip) continue;
+        chips.forEach((a) => a.removeAttribute('aria-current'));
+        chip.setAttribute('aria-current', 'true');
+        chipList.scrollTo({ left: chip.offsetLeft - chipList.clientWidth / 2 + chip.clientWidth / 2, behavior: 'smooth' });
+      }
+    },
+    { rootMargin: '-35% 0px -55% 0px' },
+  );
+  document.querySelectorAll('.menu-section').forEach((s) => spy.observe(s));
+}
+
+/* ---------------------------------------------- Instagram reel: load on click only -- */
+document.querySelectorAll<HTMLButtonElement>('[data-ig]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.instagram.com/reel/${btn.dataset.ig}/embed`;
+    iframe.title = 'Video from Instagram';
+    iframe.allow = 'autoplay; encrypted-media; fullscreen';
+    iframe.loading = 'lazy';
+    btn.replaceWith(iframe);
+  });
+});

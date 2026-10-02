@@ -3,7 +3,7 @@
 import Tag from './Tag.astro';
 import Photo from './Photo.astro';
 import { photos } from '../data/photos';
-import { formatPrice, type MenuItem } from '../data/menu';
+import { formatPrice, PROTEINS, type MenuItem } from '../data/menu';
 
 interface Props {
   item: MenuItem;
@@ -13,7 +13,7 @@ const photo = photos.find((p) => p.slot === 'menu' && p.menu === item.id);
 const tags = item.tags ?? [];
 ---
 
-<article class:list={['pt-item', photo && 'pt-item--photo']} id={`item-${item.id}`}>
+<article class:list={['pt-item reveal', photo && 'pt-item--photo']} id={`item-${item.id}`}>
   {
     photo && (
       <Photo
@@ -31,13 +31,11 @@ const tags = item.tags ?? [];
   </div>
   <p class="pt-item__desc">{item.description}</p>
   {
-    item.rows && (
-      <ul class="pt-item__rows">
-        {item.rows.map((r) => (
+    item.proteins && (
+      <ul class="pt-item__flavors" aria-label="Choice of protein">
+        {PROTEINS.map((x) => (
           <li>
-            <span class="pt-item__rowname">{r.name}</span>
-            <span class="pt-item__leader" aria-hidden="true" />
-            <span class="pt-item__price pt-item__price--sm">{formatPrice(r.price)}</span>
+            <Tag>{x}</Tag>
           </li>
         ))}
       </ul>

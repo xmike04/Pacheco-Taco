@@ -38,8 +38,10 @@ export const site = {
     directions:
       'https://www.google.com/maps/dir/?api=1&destination=1311+S+Ervay+St%2C+Dallas%2C+TX+75215',
     facebook: 'https://www.facebook.com/pachecotaconburger/',
-    // From a Yahoo Local listing; not confirmed on Instagram itself (login wall). Verify.
+    // Confirmed: the profile is indexed by search (@pachecotaconburger).
     instagram: 'https://www.instagram.com/pachecotaconburger/',
+    // Paste a reel/post URL (https://www.instagram.com/reel/XXXX/) to show a click-to-play video on the home page.
+    instagramReel: '',
     yelp: 'https://www.yelp.com/biz/pacheco-taco-n-burger-dallas',
   },
 

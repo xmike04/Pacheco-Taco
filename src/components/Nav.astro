@@ -4,6 +4,7 @@
 // Phone is a tel: link in the header at every width (icon-only on small screens).
 import Button from './Button.astro';
 import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
 import { site, fullAddress } from '../data/site';
 
 interface Props {
@@ -22,14 +23,7 @@ const tel = `tel:${site.phone.tel}`;
 <header class="site-header">
   <nav class="pt-nav" aria-label="Main">
     <a class="pt-nav__home" href="/" aria-label={`${site.name} — home`}>
-      <img class="pt-nav__logo pt-only-light" src="/assets/logos/pacheco-lockup.svg" alt="" width="720" height="300" />
-      <img
-        class="pt-nav__logo pt-only-dark"
-        src="/assets/logos/pacheco-lockup-dark-transparent.svg"
-        alt=""
-        width="720"
-        height="300"
-      />
+      <Wordmark />
     </a>
 
     <ul class="pt-nav__links">
@@ -64,21 +58,15 @@ const tel = `tel:${site.phone.tel}`;
 
   <dialog id="menu-sheet" class="sheet" aria-label="Site menu">
     <div class="sheet__bar">
-      <img
-        class="sheet__logo"
-        src="/assets/logos/pacheco-lockup-reverse-transparent.svg"
-        alt=""
-        width="720"
-        height="300"
-      />
+      <Wordmark tone="on-dark" class="sheet__logo" />
       <button class="pt-btn pt-btn--ghost pt-btn--icon" type="button" data-menu-close>
         <Icon name="close" /><span class="sr-only">Close menu</span>
       </button>
     </div>
     <nav aria-label="Mobile">
       <ul class="sheet__links">
-        {links.map((l) => (
-          <li>
+        {links.map((l, i) => (
+          <li style={`--i:${i}`}>
             <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>
               {l.label}
             </a>

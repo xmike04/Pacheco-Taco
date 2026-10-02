@@ -41,7 +41,7 @@ import { menu } from '../data/menu';
         <>
           {i > 0 && <Divider />}
           <section class="menu-section" id={section.id} aria-labelledby={`${section.id}-h`}>
-            <header class="menu-section__head">
+            <header class="menu-section__head reveal">
               <h2 class="display-lg" id={`${section.id}-h`}>
                 {section.title}
               </h2>
@@ -57,7 +57,7 @@ import { menu } from '../data/menu';
       ))
     }
 
-    <p class="fine-print">Prices may vary on delivery apps. Ask us about ingredients and allergens.</p>
+    <p class="fine-print">Ask at the counter for today's prices. Ask us about ingredients and allergens.</p>
 
     <div class="section-cta">
       <Button href={site.links.order} variant="primary" icon="bag" external>Order online</Button>

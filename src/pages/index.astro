@@ -6,6 +6,8 @@ import MenuItem from '../components/MenuItem.astro';
 import Button from '../components/Button.astro';
 import Photo from '../components/Photo.astro';
 import Tag from '../components/Tag.astro';
+import Marquee from '../components/Marquee.astro';
+import InstagramSection from '../components/InstagramSection.astro';
 import { site, hours, dayNames, formatRange } from '../data/site';
 import { startHere, findItem, type MenuItem as Item } from '../data/menu';
 import { photos } from '../data/photos';
@@ -30,7 +32,7 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
 
   <section class="section" id="start" aria-labelledby="start-h">
     <div class="container">
-      <header class="section-head">
+      <header class="section-head reveal">
         <p class="pt-eyebrow">Start here</p>
         <h2 class="display-lg" id="start-h">First time? Order one of these.</h2>
       </header>
@@ -47,7 +49,7 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
     strip.length >= 2 && (
       <section class="section section--tight" aria-labelledby="strip-h">
         <div class="container">
-          <header class="section-head">
+          <header class="section-head reveal">
             <p class="pt-eyebrow">The goods</p>
             <h2 class="display-lg" id="strip-h">
               Fresh off the flat-top
@@ -55,7 +57,7 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
           </header>
           <div class="strip" style={`--cols:${strip.length <= 5 ? strip.length : 3}`}>
             {strip.map((p) => (
-              <Photo entry={p} widths={[360, 560, 800]} sizes="(min-width: 721px) 30vw, 45vw" class="strip__photo" />
+              <Photo entry={p} widths={[360, 560, 800]} sizes="(min-width: 721px) 30vw, 45vw" class="strip__photo reveal" />
             ))}
           </div>
         </div>
@@ -63,9 +65,11 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
     )
   }
 
+  <Marquee />
+
   <section class="section story" id="story" aria-labelledby="story-h">
     <div class="container story__grid">
-      <div class="story__copy">
+      <div class="story__copy reveal">
         <p class="pt-eyebrow">Our story</p>
         <h2 class="display-lg" id="story-h">Mom &amp; son. Scratch kitchen.</h2>
         <p class="lead">
@@ -76,7 +80,7 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
           You'll find us inside {site.inside} in {site.neighborhood}. Order at the counter, and get it while it's hot.
         </p>
       </div>
-      <div class:list={['story__art', storyPhoto && 'story__art--photo']}>
+      <div class:list={['story__art reveal', storyPhoto && 'story__art--photo']}>
         {
           storyPhoto ? (
             <>
@@ -107,9 +111,11 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
     </div>
   </section>
 
+  <InstagramSection />
+
   <section class="section" id="visit" aria-labelledby="visit-h">
     <div class="container visit__grid">
-      <div class="visit__details">
+      <div class="visit__details reveal">
         <p class="pt-eyebrow">Visit</p>
         <h2 class="display-lg" id="visit-h">Come hungry.</h2>
         <address class="visit__address">
@@ -138,7 +144,7 @@ const visitPhoto = photos.find((p) => p.slot === 'visit');
         }
       </div>
 
-      <div class="hours-card" id="hours">
+      <div class="hours-card reveal" id="hours">
         <div class="hours-card__head">
           <h3 class="hours-card__title">Hours</h3>
           <span class="open-status" data-open-status hidden></span>
